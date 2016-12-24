@@ -44,11 +44,11 @@ package object implicits {
   implicit class RichColumn(val c: Column) {
 
     def addPeriod(p: Period, dataType: DataType = TimestampType): Column = {
-      functions.addPeriod(c, p, dataType)
+      DateTime(c, dataType) + p
     }
 
-    def subtractPeriod(p: Period, dataType: DataType = TimestampType): Column = {
-      functions.subtractPeriod(c, p, dataType)
+    def subPeriod(p: Period, dataType: DataType = TimestampType): Column = {
+      DateTime(c, dataType) - p
     }
   }
 }
