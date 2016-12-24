@@ -1,6 +1,7 @@
 package danielpes.spark.datetime
 
 import org.apache.spark.sql.Column
+import org.apache.spark.sql.types.{DataType, TimestampType}
 
 package object implicits {
 
@@ -42,9 +43,13 @@ package object implicits {
 
   implicit class RichColumn(val c: Column) {
 
-    def add(interval: Period): Column = c
+    def addPeriod(p: Period, dataType: DataType = TimestampType): Column = {
+      functions.addPeriod(c, p, dataType)
+    }
 
-    def subtract(interval: Period): Column = c
+    def subtractPeriod(p: Period, dataType: DataType = TimestampType): Column = {
+      functions.subtractPeriod(c, p, dataType)
+    }
   }
 }
 

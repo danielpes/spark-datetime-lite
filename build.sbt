@@ -5,7 +5,7 @@ version := "0.1.0"
 scalaVersion := "2.11.8"
 crossScalaVersions := Seq("2.10.6", "2.11.8")
 
-val sparkVersion = "2.0.2"
+val sparkVersion = "1.6.2"
 
 parallelExecution in Test := false
 
