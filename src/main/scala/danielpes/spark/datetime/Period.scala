@@ -1,44 +1,47 @@
 package danielpes.spark.datetime
 
-import java.util.Calendar
 import scala.collection.immutable.ListMap
 
-case class Period(
-    years: Int = 0,
-    months: Int = 0,
-    days: Int = 0,
-    hours: Int = 0,
-    minutes: Int = 0,
-    seconds: Int = 0,
-    milliseconds: Int = 0) {
+class Period(
+    val totalMonths: Int = 0,
+    val totalMilliseconds: Long = 0) extends Serializable {
 
-  def unary_-(): Period = Period.fromList(this.toList.map(-_))
+  def years: Int = this.toMap.apply("years").toInt
+  def months: Int = this.toMap.apply("months").toInt
+  def days: Int = this.toMap.apply("days").toInt
+  def hours: Int = this.toMap.apply("hours").toInt
+  def minutes: Int = this.toMap.apply("minutes").toInt
+  def seconds: Int = this.toMap.apply("seconds").toInt
+  def milliseconds: Long = this.toMap.apply("milliseconds")
 
-  def +(other: Period): Period = Period.fromList((this.toList, other.toList).zipped.map(_ + _))
+  def unary_-(): Period = new Period(-totalMonths, -totalMilliseconds)
+
+  def +(other: Period): Period = {
+    new Period(totalMonths + other.totalMonths, totalMilliseconds + other.totalMilliseconds)
+  }
 
   def +[T <: java.util.Date](date: T): T = DateTimeFunctions.addPeriod(date, this)
 
-  def toList: List[Int] = List(years, months, days, hours, minutes, seconds, milliseconds)
+  def toMap: ListMap[String, Long] = {
 
-  def toMap: ListMap[String, Int] = ListMap(
-    "years" -> years,
-    "months" -> months,
-    "days" -> days,
-    "hours" -> hours,
-    "minutes" -> minutes,
-    "seconds" -> seconds,
-    "milliseconds" -> milliseconds
-  )
+    val msCounts: List[(String, Long)] = List(
+      ("days", Period.MS_PER_DAY),
+      ("hours", Period.MS_PER_HOUR),
+      ("minutes", Period.MS_PER_MIN),
+      ("seconds", Period.MS_PER_SEC),
+      ("milliseconds", 1L)
+    )
+    val initialMap = ListMap(
+      "years" -> totalMonths / 12L,
+      "months" -> totalMonths % 12L
+    )
+    msCounts.foldLeft((initialMap, totalMilliseconds)) {
+      case ((newMap, rest), (unitName, msPerUnit)) =>
+        (newMap + (unitName -> rest / msPerUnit), rest % msPerUnit)
+    }._1
+  }
 
-  def getByCalendarUnit: Map[Int, Int] = Map(
-    Calendar.YEAR -> years,
-    Calendar.MONTH -> months,
-    Calendar.DATE -> days,
-    Calendar.HOUR -> hours,
-    Calendar.MINUTE -> minutes,
-    Calendar.SECOND -> seconds,
-    Calendar.MILLISECOND -> milliseconds
-  )
+  def toList: List[Long] = this.toMap.values.toList
 
   def isSingleUnit: Boolean = {
     this.toList.count(_ != 0) == 1
@@ -55,11 +58,41 @@ case class Period(
 
   def canEqual(a: Any): Boolean = a.isInstanceOf[Period]
   override def equals(that: Any): Boolean = that match {
-    case that: Period => that.canEqual(this) && this.toList == that.toList
+    case that: Period => that.canEqual(this) &&
+      this.totalMonths == that.totalMonths &&
+      this.totalMilliseconds == that.totalMilliseconds
     case _ => false
   }
 }
 
 object Period {
-  def fromList(list: Seq[Int]) = Period(list(0), list(1), list(2), list(3), list(4), list(5), list(6))
+
+  private val MS_PER_SEC: Long =  1000L
+  private val MS_PER_MIN: Long =  MS_PER_SEC * 60L
+  private val MS_PER_HOUR: Long = MS_PER_MIN * 60L
+  private val MS_PER_DAY: Long =  MS_PER_HOUR * 24L
+
+  def apply(
+    years: Int = 0,
+    months: Int = 0,
+    days: Int = 0,
+    hours: Int = 0,
+    minutes: Int = 0,
+    seconds: Int = 0,
+    milliseconds: Long = 0): Period = {
+
+    val totalMonths = months + (12 * years)
+    val totalMilliseconds = milliseconds +
+      seconds * MS_PER_SEC +
+      minutes * MS_PER_MIN +
+      hours   * MS_PER_HOUR +
+      days    * MS_PER_DAY
+
+    new Period(totalMonths, totalMilliseconds)
+  }
+
+  def fromList(list: List[Long]) = {
+    Period(list(0).toInt, list(1).toInt, list(2).toInt, list(3).toInt, list(4).toInt, list(5).toInt,
+      list(6))
+  }
 }

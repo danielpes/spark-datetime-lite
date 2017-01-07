@@ -17,13 +17,12 @@ private[datetime] object DateTimeFunctions {
   def addPeriod[T <: java.util.Date](datetime: T, period: Period): T = {
     val c = Calendar.getInstance()
     c.setTime(datetime)
-    calendarUnitList.foreach {
-      calUnit => c.add(calUnit, period.getByCalendarUnit(calUnit))
-    }
+    c.add(Calendar.MONTH, period.totalMonths)
+    val totalMillis = c.getTimeInMillis + period.totalMilliseconds
 
     datetime match {
-      case _: java.sql.Date => new java.sql.Date(c.getTimeInMillis).asInstanceOf[T]
-      case _: java.sql.Timestamp => new java.sql.Timestamp(c.getTimeInMillis).asInstanceOf[T]
+      case _: java.sql.Date => new java.sql.Date(totalMillis).asInstanceOf[T]
+      case _: java.sql.Timestamp => new java.sql.Timestamp(totalMillis).asInstanceOf[T]
     }
   }
 
