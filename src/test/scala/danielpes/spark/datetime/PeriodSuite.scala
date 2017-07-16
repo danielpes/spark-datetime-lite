@@ -46,7 +46,7 @@ class PeriodSuite extends FlatSpec {
     val period = Period(days = 3, hours = 25)
     val date = java.sql.Date.valueOf("2010-01-01")
 
-    val expected = DateTimeFunctions.addPeriod(date, period)
+    val expected = new RichDate(date) + period
     val result = period + date
 
     assert(result == expected)
@@ -56,7 +56,7 @@ class PeriodSuite extends FlatSpec {
     val period = Period(days = 3, hours = 25)
     val timestamp = java.sql.Timestamp.valueOf("2010-01-01 15:00:00")
 
-    val expected = DateTimeFunctions.addPeriod(timestamp, period)
+    val expected = new RichDate(timestamp) + period
     val result = period + timestamp
 
     assert(result == expected)

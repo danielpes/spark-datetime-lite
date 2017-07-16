@@ -20,7 +20,7 @@ class Period(
     new Period(totalMonths + other.totalMonths, totalMilliseconds + other.totalMilliseconds)
   }
 
-  def +[T <: java.util.Date](date: T): T = DateTimeFunctions.addPeriod(date, this)
+  def +[T <: java.util.Date](date: T): T = new RichDate(date) + this
 
   def toMap: ListMap[String, Long] = {
 
