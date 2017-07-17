@@ -9,10 +9,13 @@ class RichIntSuite extends FlatSpec {
 
   "year/years" should "create a corresponding Period instance" in {
     assert(one.year == Period(years = 1))
+    assert(one.yr == Period(years = 1))
     assert(five.years == Period(years = 5))
+    assert(five.yrs == Period(years = 5))
   }
   "month/months" should "create a corresponding Period instance" in {
     assert(one.month == Period(months = 1))
+    assert(one.mo == Period(months = 1))
     assert(five.months == Period(months = 5))
   }
   "day/days" should "create a corresponding Period instance" in {
@@ -22,14 +25,20 @@ class RichIntSuite extends FlatSpec {
   "hour/hours" should "create a corresponding Period instance" in {
     assert(one.hour == Period(hours = 1))
     assert(five.hours == Period(hours = 5))
+    assert(five.hrs == Period(hours = 5))
+    assert(five.hs == Period(hours = 5))
   }
   "minute/minutes" should "create a corresponding Period instance" in {
     assert(one.minute == Period(minutes = 1))
+    assert(one.min == Period(minutes = 1))
     assert(five.minutes == Period(minutes = 5))
+    assert(five.mins == Period(minutes = 5))
   }
   "second/seconds" should "create a corresponding Period instance" in {
     assert(one.s == Period(seconds = 1))
+    assert(one.sec == Period(seconds = 1))
     assert(one.second == Period(seconds = 1))
     assert(five.seconds == Period(seconds = 5))
+    assert(five.secs == Period(seconds = 5))
   }
 }

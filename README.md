@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/io.me.danielpes/spark-datetime-lite.svg?branch=master)](https://travis-ci.org/io.me.danielpes/spark-datetime-lite)
-<!-- [![codecov](https://codecov.io/gh/io.me.danielpes/spark-datetime-lite/branch/master/graph/badge.svg)](https://codecov.io/gh/io.me.danielpes/spark-datetime-lite) -->
+[![Build Status](https://travis-ci.org/danielpes/spark-datetime-lite.svg?branch=master)](https://travis-ci.org/danielpes/spark-datetime-lite)
+[![codecov](https://codecov.io/gh/danielpes/spark-datetime-lite/branch/master/graph/badge.svg)](https://codecov.io/gh/danielpes/spark-datetime-lite)
 
 # Spark DateTime Lite
 
