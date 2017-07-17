@@ -1,4 +1,4 @@
-package danielpes.spark.datetime
+package me.danielpes.spark.datetime
 
 import org.scalatest.FlatSpec
 

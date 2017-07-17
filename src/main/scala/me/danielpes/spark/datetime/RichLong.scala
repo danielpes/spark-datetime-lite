@@ -1,4 +1,4 @@
-package danielpes.spark.datetime
+package me.danielpes.spark.datetime
 
 private[datetime] class RichLong(val value: Long) {
 

@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/danielpes/spark-datetime-lite.svg?branch=master)](https://travis-ci.org/danielpes/spark-datetime-lite)
-<!-- [![codecov](https://codecov.io/gh/danielpes/spark-datetime-lite/branch/master/graph/badge.svg)](https://codecov.io/gh/danielpes/spark-datetime-lite) -->
+[![Build Status](https://travis-ci.org/io.me.danielpes/spark-datetime-lite.svg?branch=master)](https://travis-ci.org/io.me.danielpes/spark-datetime-lite)
+<!-- [![codecov](https://codecov.io/gh/io.me.danielpes/spark-datetime-lite/branch/master/graph/badge.svg)](https://codecov.io/gh/io.me.danielpes/spark-datetime-lite) -->
 
 # Spark DateTime Lite
 
@@ -26,26 +26,26 @@ val df = Seq(
 case class MyClass(timestamp_col: Timestamp, date_col: Date)
 val ds = df.as[MyClass]
 
-import danielpes.spark.datetime.implicits._
+import me.danielpes.spark.datetime.implicits._
 ds.map {
   case MyClass(ts: Timestamp, date: Date) => MyClass(ts + 30.minutes, date + 5.days)
 }
 
 // Using Column implicits:
-import danielpes.spark.datetime.implicits._
+import me.danielpes.spark.datetime.implicits._
 df.select($"timestamp_col".addPeriod(1.day + 3.hours + 30.mins))
 df.select($"timestamp_col".subPeriod(1 hour))
 df.select($"date_col".addPeriod(1.yr + 6.months + 12.hours))
 df.select($"date_col".addPeriod(5 days, DateType))
 
 // Using functions:
-import danielpes.spark.datetime.implicits._
-import danielpes.spark.datetime.functions._
+import me.danielpes.spark.datetime.implicits._
+import me.danielpes.spark.datetime.functions._
 df.select(addPeriod($"timestamp_col", 1.hour))
 
 // Using the DateTime class
-import danielpes.spark.datetime.implicits._
-import danielpes.spark.datetime.{DateTimeColumn => dt}
+import me.danielpes.spark.datetime.implicits._
+import me.danielpes.spark.datetime.{DateTimeColumn => dt}
 df.select(dt("timestamp_col") + 1.hour)
 df.select(dt($"timestamp_col") + 1.year)
 df.select(dt("date_col", DateType) + 3.days)

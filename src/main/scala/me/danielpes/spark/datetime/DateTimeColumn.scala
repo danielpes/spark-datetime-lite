@@ -1,4 +1,4 @@
-package danielpes.spark.datetime
+package me.danielpes.spark.datetime
 
 import org.apache.spark.sql.Column
 import org.apache.spark.sql.types.{DataType, DateType, TimestampType}
