@@ -1,5 +1,6 @@
 [![Build Status](https://img.shields.io/travis/danielpes/spark-datetime-lite.svg?style=flat-square)](https://travis-ci.org/danielpes/spark-datetime-lite)
 [![codecov](https://img.shields.io/codecov/c/github/danielpes/spark-datetime-lite.svg?style=flat-square)](https://codecov.io/gh/danielpes/spark-datetime-lite)
+[![spark-packages](https://img.shields.io/badge/spark--packages-v0.1.0-blue.svg?style=flat-square)](https://spark-packages.org/package/danielpes/spark-datetime-lite)
 
 # Spark DateTime Lite
 
