@@ -1,6 +1,6 @@
 [![Build Status](https://img.shields.io/travis/danielpes/spark-datetime-lite.svg?style=flat-square)](https://travis-ci.org/danielpes/spark-datetime-lite)
 [![codecov](https://img.shields.io/codecov/c/github/danielpes/spark-datetime-lite.svg?style=flat-square)](https://codecov.io/gh/danielpes/spark-datetime-lite)
-[![spark-packages](https://img.shields.io/badge/spark--packages-v0.1.0-blue.svg?style=flat-square)](https://spark-packages.org/package/danielpes/spark-datetime-lite)
+[![spark-packages](https://img.shields.io/badge/spark--packages-v0.2.0-blue.svg?style=flat-square)](https://spark-packages.org/package/danielpes/spark-datetime-lite)
 
 # Spark DateTime Lite
 
@@ -15,20 +15,20 @@ This library is available in [Spark Packages](https://spark-packages.org/package
 ### spark-shell, pyspark, or spark-submit
 Just pass it using the `--packages` parameter. For example:
 ```
-$SPARK_HOME/bin/spark-shell --packages danielpes:spark-datetime-lite:0.1.0-s_2.11
+$SPARK_HOME/bin/spark-shell --packages danielpes:spark-datetime-lite:0.2.0-s_2.11
 ```
 
 ### SBT
 
 If you use the sbt-spark-package plugin, in your sbt build file, add:
 ```
-spDependencies += "danielpes/spark-datetime-lite:0.1.0-s_2.11"
+spDependencies += "danielpes/spark-datetime-lite:0.2.0-s_2.11"
 ```
 
 Otherwise,
 ```
 resolvers += "Spark Packages Repo" at "http://dl.bintray.com/spark-packages/maven"
-libraryDependencies += "danielpes" % "spark-datetime-lite" % "0.1.0-s_2.11"
+libraryDependencies += "danielpes" % "spark-datetime-lite" % "0.2.0-s_2.11"
 ```
 
 ### Maven
@@ -39,7 +39,7 @@ In your pom.xml, add:
   <dependency>
     <groupId>danielpes</groupId>
     <artifactId>spark-datetime-lite</artifactId>
-    <version>0.1.0-s_2.11</version>
+    <version>0.2.0-s_2.11</version>
   </dependency>
 </dependencies>
 <repositories>
