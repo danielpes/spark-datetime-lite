@@ -1,7 +1,7 @@
 name := "spark-datetime-lite"
 spName := "danielpes/spark-datetime-lite"
 
-version := "0.1.0"
+version := "0.2.0"
 
 licenses += "Apache-2.0" -> url("http://opensource.org/licenses/Apache-2.0")
 
