@@ -10,22 +10,26 @@ private[datetime] class RichDate[A <: java.util.Date](val datetime: A) {
     c
   }
 
-  def +(period: Period): A = {
-    val c = getCalendar
-    c.add(Calendar.MONTH, period.totalMonths)
-    val totalMillis = c.getTimeInMillis + period.totalMilliseconds
+  def +(period: Period): Option[A] = {
+    Option(datetime) map { _ =>
+      val c = getCalendar
+      c.add (Calendar.MONTH, period.totalMonths)
+      val totalMillis = c.getTimeInMillis + period.totalMilliseconds
 
-    datetime match {
-      case _: java.sql.Date => new java.sql.Date(totalMillis).asInstanceOf[A]
-      case _: java.sql.Timestamp => new java.sql.Timestamp(totalMillis).asInstanceOf[A]
+      datetime match {
+        case _: java.sql.Date => new java.sql.Date (totalMillis).asInstanceOf[A]
+        case _: java.sql.Timestamp => new java.sql.Timestamp (totalMillis).asInstanceOf[A]
+      }
     }
   }
 
-  def -(p: Period): A = this + (-p)
+  def -(p: Period): Option[A] = this + (-p)
 
-  def between[B <: java.util.Date](lower: B, upper: B, includeBounds: Boolean = true): Boolean = {
-    if (includeBounds) datetime.getTime >= lower.getTime && datetime.getTime <= upper.getTime
-    else datetime.getTime > lower.getTime && datetime.getTime < upper.getTime
+  def between[B <: java.util.Date](lower: B, upper: B, includeBounds: Boolean = true): Option[Boolean] = {
+    Option(datetime) map { _ =>
+      if (includeBounds) datetime.getTime >= lower.getTime && datetime.getTime <= upper.getTime
+      else datetime.getTime > lower.getTime && datetime.getTime < upper.getTime
+    }
   }
 
   def toTimestamp: java.sql.Timestamp = new java.sql.Timestamp(datetime.getTime)

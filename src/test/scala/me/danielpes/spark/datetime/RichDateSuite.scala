@@ -14,7 +14,7 @@ class RichDateSuite extends FlatSpec {
     val result = inputDate + period
 
     // Then
-    assert(result == expected)
+    assert(result.contains(expected))
   }
 
   it should "allow adding a period to a java.sql.Timestamp" in {
@@ -27,7 +27,19 @@ class RichDateSuite extends FlatSpec {
     val result = inputTimestamp + period
 
     // Then
-    assert(result == expected)
+    assert(result.contains(expected))
+  }
+
+  it should "return None if the timestamp is null" in {
+    // Given
+    val period = Period(days = 3, hours = 25)
+    val inputTimestamp = new RichDate(null)
+
+    // When
+    val result = inputTimestamp + period
+
+    // Then
+    assert(result.isEmpty)
   }
 
   "Minus operator" should "allow subtracting a period from a java.sql.Date" in {
@@ -40,7 +52,7 @@ class RichDateSuite extends FlatSpec {
     val result = inputDate - period
 
     // Then
-    assert(result == expected)
+    assert(result.contains(expected))
   }
 
   it should "allow subtracting a period from a java.sql.Timestamp" in {
@@ -53,7 +65,20 @@ class RichDateSuite extends FlatSpec {
     val result = inputTimestamp - period
 
     // Then
-    assert(result == expected)
+    assert(result.contains(expected))
+  }
+
+
+  it should "return None if the timestamp is null" in {
+    // Given
+    val period = Period(days = 3, hours = 25)
+    val inputTimestamp = new RichDate(null)
+
+    // When
+    val result = inputTimestamp - period
+
+    // Then
+    assert(result.isEmpty)
   }
 
   "between" should "return true if this date/timestamp is between two given dates/timestamps" in {
@@ -66,7 +91,7 @@ class RichDateSuite extends FlatSpec {
     val result = inputDate.between(lowerBound, upperBound)
 
     // Then
-    assert(result)
+    assert(result.contains(true))
   }
 
   it should "not include bounds when false is passed as third parameter" in {
@@ -79,7 +104,20 @@ class RichDateSuite extends FlatSpec {
     val result = inputDate.between(lowerBound, upperBound, includeBounds = false)
 
     // Then
-    assert(!result)
+    assert(result.contains(false))
+  }
+
+  it should "return None if the timestamp is null" in {
+    // Given
+    val inputDate = new RichDate(null)
+    val lowerBound = java.sql.Date.valueOf("2010-01-01")
+    val upperBound = java.sql.Date.valueOf("2010-01-02")
+
+    // When
+    val result = inputDate.between(lowerBound, upperBound, includeBounds = false)
+
+    // Then
+    assert(result.isEmpty)
   }
 
   "toTimestamp" should "cast an instance of T <: java.util.Date to java.sql.Timestamp" in {
